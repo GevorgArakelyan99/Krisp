@@ -12,36 +12,25 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: taskdb
     volumes:
-#     - db_data:/var/lib/postgresql/data
+    - db_data:/var/lib/postgresql/data
      - /init.sql:/docker-entrypoint-initdb.d/db
-#    networks:
-#      - app-network
+   networks:
+     - app-network
 
-#  app:
-#    build: ./app
-#    ports:
-#      - "5000:5000"
-#    environment:
-#      - NAME=World
-#    depends_on:
-#      - database
-#    networks:
-#      - app-network
+ app:
+   build: ./app
+   ports:
+     - "5000:5000"
+   environment:
+     - NAME=World
+   depends_on:
+     - database
+   networks:
+     - app-network
 
+networks:
+ app-network:
+   driver: bridge
 
-  adminer:
-      image: adminer
-      restart: always
-      depends_on:
-        - database
-      ports:
-        - "8080:8080"
-
-
-
-#networks:
-#  app-network:
-#    driver: bridge
-#
-#volumes:
-#  db_data:
+volumes:
+ db_data:
